@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#000000">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TO DO LIST"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/taskNameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Task Name"
+        android:padding="8dp"
+        android:background="@android:color/white" />
+
+    <EditText
+        android:id="@+id/taskTimeInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Time"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white" />
+
+    <EditText
+        android:id="@+id/taskDescriptionInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Description"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white" />
+
+    <Switch
+        android:id="@+id/markAsCompleteSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mark as Complete"
+        android:layout_marginTop="8dp"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+        android:textColor="#FFFFFF"
+        android:background="#FF5252"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/showListButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SHOW LIST"
+        android:textColor="#FFFFFF"
+        android:background="#FF5252"
+        android:layout_marginTop="8dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/taskListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:divider="#FFFFFF"
+        android:dividerHeight="1dp" />
+
+</LinearLayout>
