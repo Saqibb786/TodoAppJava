@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private TaskAdapter taskAdapter;
     private TaskDatabaseHelper dbHelper;
     private SQLiteDatabase db;
-    private boolean showAllTasks = false;
+    private boolean showAllTasks = true; // Set initial value to show all tasks
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
         showListButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
             showAllTasks = isChecked;
             loadTasksFromDatabase();
+            if (taskList.isEmpty()) {
+                Toast.makeText(MainActivity.this, "No tasks to display", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

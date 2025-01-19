@@ -62,6 +62,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         // Handle Status Change
         holder.taskStatusGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (group.getTag() != null && (boolean) group.getTag()) {
+                return;
+            }
             boolean isComplete = checkedId == R.id.radioCompleted;
             task.setComplete(isComplete);
             ContentValues values = new ContentValues();
@@ -69,6 +72,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             db.update(TaskDatabaseHelper.TABLE_TASKS, values, TaskDatabaseHelper.COLUMN_ID + "=?",
                     new String[] { String.valueOf(task.getId()) });
         });
+
+        holder.taskStatusGroup.setTag(true);
+        holder.taskStatusGroup.clearCheck();
+        holder.taskStatusGroup.setTag(false);
+        if (task.isComplete()) {
+            holder.radioCompleted.setChecked(true);
+        } else {
+            holder.radioPending.setChecked(true);
+        }
     }
 
     @Override

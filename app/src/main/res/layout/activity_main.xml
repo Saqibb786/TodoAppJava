@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#000000">
+    android:background="@color/background">
 
     <TextView
         android:layout_width="match_parent"
@@ -13,65 +13,66 @@
         android:text="TODO APP"
         android:textSize="24sp"
         android:gravity="center"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/onBackground"
         android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/taskNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/onBackground"
         android:hint="Enter Task Name"
         android:padding="8dp"
-        android:background="@android:color/white" />
+        android:background="@color/surface" />
 
     <EditText
         android:id="@+id/taskTimeInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/onBackground"
         android:inputType="datetime"
         android:hint="Enter Time"
         android:padding="8dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/white" />
+        android:background="@color/surface" />
 
     <EditText
         android:id="@+id/taskDescriptionInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/onBackground"
         android:hint="Enter Description"
         android:inputType="text"
         android:padding="8dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/white" />
+        android:background="@color/surface" />
 
     <Button
         android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ADD"
-        android:textColor="#FFFFFF"
-        android:background="#FF5252"
+        android:textColor="@color/black"
+        android:background="@drawable/add_button_shape"
         android:layout_marginTop="16dp" />
 
     <ToggleButton
         android:id="@+id/showListButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textOff="Show Pending Tasks"
-        android:textOn="Show All Tasks"
+        android:textOff="Pending Tasks"
+        android:textOn="All Tasks"
+        android:checked="true"
         android:layout_marginTop="8dp"
-        android:background="#FF5252"
-        android:textColor="#FFFFFF" />
+        android:background="@drawable/button_shape"
+        android:textColor="@color/onPrimary" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/taskListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
-        android:divider="#FFFFFF"
+        android:divider="@color/onBackground"
         android:dividerHeight="1dp" />
 
 </LinearLayout>
