@@ -1,4 +1,3 @@
-// filepath: java/com/example/todolistapp/Model/Task.java
 package com.example.todolistapp.Model;
 
 public class Task {

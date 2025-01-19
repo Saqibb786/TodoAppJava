@@ -45,6 +45,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.taskName.setText(task.getName());
         holder.taskTime.setText(task.getTime());
         holder.taskDescription.setText(task.getDescription());
+        holder.radioPending.setChecked(!task.isComplete());
+        holder.radioCompleted.setChecked(task.isComplete());
 
         // Handle Edit Button Click
         holder.editButton.setOnClickListener(v -> showEditDialog(task));
@@ -57,6 +59,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, tasks.size());
         });
+
+        // Handle Status Change
+        holder.taskStatusGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            boolean isComplete = checkedId == R.id.radioCompleted;
+            task.setComplete(isComplete);
+            ContentValues values = new ContentValues();
+            values.put(TaskDatabaseHelper.COLUMN_STATUS, isComplete ? 1 : 0);
+            db.update(TaskDatabaseHelper.TABLE_TASKS, values, TaskDatabaseHelper.COLUMN_ID + "=?",
+                    new String[] { String.valueOf(task.getId()) });
+        });
     }
 
     @Override
@@ -67,6 +79,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     // ViewHolder class to hold each item view
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView taskName, taskTime, taskDescription;
+        RadioGroup taskStatusGroup;
+        RadioButton radioPending, radioCompleted;
         Button editButton, deleteButton;
 
         public TaskViewHolder(View itemView) {
@@ -74,6 +88,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskName = itemView.findViewById(R.id.taskName);
             taskTime = itemView.findViewById(R.id.taskTime);
             taskDescription = itemView.findViewById(R.id.taskDescription);
+            taskStatusGroup = itemView.findViewById(R.id.taskStatusGroup);
+            radioPending = itemView.findViewById(R.id.radioPending);
+            radioCompleted = itemView.findViewById(R.id.radioCompleted);
             editButton = itemView.findViewById(R.id.editButton);
             deleteButton = itemView.findViewById(R.id.deleteButton);
         }

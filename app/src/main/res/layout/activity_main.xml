@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TO DO LIST"
+        android:text="TODO APP"
         android:textSize="24sp"
         android:gravity="center"
         android:textColor="#FFFFFF"
@@ -20,6 +20,7 @@
         android:id="@+id/taskNameInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:hint="Enter Task Name"
         android:padding="8dp"
         android:background="@android:color/white" />
@@ -28,6 +29,8 @@
         android:id="@+id/taskTimeInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:inputType="datetime"
         android:hint="Enter Time"
         android:padding="8dp"
         android:layout_marginTop="8dp"
@@ -37,18 +40,12 @@
         android:id="@+id/taskDescriptionInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:hint="Enter Description"
+        android:inputType="text"
         android:padding="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/white" />
-
-    <Switch
-        android:id="@+id/markAsCompleteSwitch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mark as Complete"
-        android:layout_marginTop="8dp"
-        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/addButton"
@@ -59,14 +56,15 @@
         android:background="#FF5252"
         android:layout_marginTop="16dp" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/showListButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SHOW LIST"
-        android:textColor="#FFFFFF"
+        android:textOff="Show Pending Tasks"
+        android:textOn="Show All Tasks"
+        android:layout_marginTop="8dp"
         android:background="#FF5252"
-        android:layout_marginTop="8dp" />
+        android:textColor="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/taskListView"

@@ -9,7 +9,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,12 +19,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private EditText taskNameInput, taskTimeInput, taskDescriptionInput;
-    private Switch markAsCompleteSwitch;
     private RecyclerView taskListView;
     private ArrayList<Task> taskList;
     private TaskAdapter taskAdapter;
     private TaskDatabaseHelper dbHelper;
     private SQLiteDatabase db;
+    private boolean showAllTasks = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +35,8 @@ public class MainActivity extends AppCompatActivity {
         taskNameInput = findViewById(R.id.taskNameInput);
         taskTimeInput = findViewById(R.id.taskTimeInput);
         taskDescriptionInput = findViewById(R.id.taskDescriptionInput);
-        markAsCompleteSwitch = findViewById(R.id.markAsCompleteSwitch);
         Button addButton = findViewById(R.id.addButton);
-        Button showListButton = findViewById(R.id.showListButton);
+        ToggleButton showListButton = findViewById(R.id.showListButton);
         taskListView = findViewById(R.id.taskListView);
 
         // Set up RecyclerView
@@ -59,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             String name = taskNameInput.getText().toString();
             String time = taskTimeInput.getText().toString();
             String description = taskDescriptionInput.getText().toString();
-            boolean isComplete = markAsCompleteSwitch.isChecked();
 
             // Validate input
             if (!name.isEmpty() && !time.isEmpty() && !description.isEmpty()) {
@@ -67,11 +64,11 @@ public class MainActivity extends AppCompatActivity {
                 values.put(TaskDatabaseHelper.COLUMN_NAME, name);
                 values.put(TaskDatabaseHelper.COLUMN_TIME, time);
                 values.put(TaskDatabaseHelper.COLUMN_DESCRIPTION, description);
-                values.put(TaskDatabaseHelper.COLUMN_STATUS, isComplete ? 1 : 0);
+                values.put(TaskDatabaseHelper.COLUMN_STATUS, 0); // Default to pending
 
                 long newRowId = db.insert(TaskDatabaseHelper.TABLE_TASKS, null, values);
 
-                Task task = new Task((int) newRowId, name, time, description, isComplete);
+                Task task = new Task((int) newRowId, name, time, description, false);
                 taskList.add(task);
                 taskAdapter.notifyItemInserted(taskList.size() - 1);
 
@@ -79,20 +76,23 @@ public class MainActivity extends AppCompatActivity {
                 taskNameInput.setText("");
                 taskTimeInput.setText("");
                 taskDescriptionInput.setText("");
-                markAsCompleteSwitch.setChecked(false);
             } else {
                 Toast.makeText(MainActivity.this, "Please fill all fields!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Show List button click listener (optional, can be used for additional
-        // functionality)
-        showListButton.setOnClickListener(v -> taskAdapter.notifyDataSetChanged());
+        // Show List button click listener
+        showListButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            showAllTasks = isChecked;
+            loadTasksFromDatabase();
+        });
     }
 
     private void loadTasksFromDatabase() {
         taskList.clear();
-        Cursor cursor = db.query(TaskDatabaseHelper.TABLE_TASKS, null, null, null, null, null, null);
+        String selection = showAllTasks ? null : TaskDatabaseHelper.COLUMN_STATUS + "=?";
+        String[] selectionArgs = showAllTasks ? null : new String[] { "0" };
+        Cursor cursor = db.query(TaskDatabaseHelper.TABLE_TASKS, null, selection, selectionArgs, null, null, null);
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.COLUMN_ID));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(TaskDatabaseHelper.COLUMN_NAME));
