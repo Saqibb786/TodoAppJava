@@ -4,7 +4,7 @@ This is a Java-based todo application that helps you manage your daily tasks eff
 
 ## Preview
 
-![TodoAppJava Preview](./TodoAppJava-thumbnail.jpg)
+<img src="./TodoAppJava-thumbnail.jpg" alt="TodoAppJava Preview" width="45%">
 
 ## Features
 
